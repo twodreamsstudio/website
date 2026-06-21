@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:#0A0B10}
+  ::selection{background:rgba(155,140,255,0.35);color:#fff}
+  @keyframes tdl-pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+  @keyframes tdl-blink{0%,100%{opacity:0.2}50%{opacity:1}}
+  @keyframes tdl-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+  @keyframes tdl-drift{0%{transform:translate(-50%,0) scale(1)}50%{transform:translate(-46%,16px) scale(1.06)}100%{transform:translate(-50%,0) scale(1)}}
+  @keyframes tdl-sheen{0%{transform:translateX(-130%) skewX(-18deg)}60%,100%{transform:translateX(260%) skewX(-18deg)}}
+  @keyframes tdl-marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+  @keyframes tdl-rise{from{transform:translateY(26px)}to{transform:none}}
+  [data-reveal]{opacity:0;transform:translateY(26px)}
+  [data-reveal="in"]{opacity:1;transform:none;animation:tdl-rise .7s cubic-bezier(.16,.84,.44,1)}
+  @media (prefers-reduced-motion: reduce){[data-reveal]{opacity:1!important;transform:none!important;transition:none}*{animation:none!important}}
+</style>
+<style>
+  @media (max-width: 880px){
+    [style*="grid-template-columns: 1.05fr 0.95fr"]{grid-template-columns:1fr !important}
+    [style*="grid-template-columns: 0.9fr 1.1fr"]{grid-template-columns:1fr !important}
+    [style*="grid-template-columns: 1.1fr 0.9fr"]{grid-template-columns:1fr !important}
+    [style*="grid-template-columns: 1fr 1fr"]{grid-template-columns:1fr !important}
+    [style*="grid-template-columns: repeat(3"]{grid-template-columns:1fr !important}
+    [style*="grid-template-columns: repeat(4"]{grid-template-columns:repeat(2,1fr) !important}
+    nav[style*="z-index: 60"]{flex-wrap:wrap !important;gap:8px !important;padding-left:18px !important;padding-right:18px !important}
+    [style*="order: 1"]{order:2 !important}
+    [style*="order: 2"]{order:1 !important}
+  }
+  @media (max-width: 480px){
+    [style*="grid-template-columns: repeat(4"]{grid-template-columns:1fr !important}
+    section{padding-left:18px !important;padding-right:18px !important}
+    nav[style*="z-index: 60"] button{font-size:13px !important;padding-left:9px !important;padding-right:9px !important}
+    [style*="font-size: 58px"]{font-size:38px !important}
+    [style*="font-size: 50px"]{font-size:34px !important}
+    [style*="font-size: 46px"]{font-size:33px !important}
+    [style*="font-size: 44px"]{font-size:32px !important}
+    [style*="font-size: 42px"]{font-size:30px !important}
+    [style*="font-size: 38px"]{font-size:28px !important}
+    [style*="font-size: 34px"]{font-size:27px !important}
+  }
+</style>
+<style>
+  [style*="linear-gradient(135deg"]{
+    position:relative; overflow:hidden;
+    border-radius:12px !important;
+    letter-spacing:.004em;
+    box-shadow:0 8px 22px -8px rgba(120,160,255,.6) !important;
+    transition:transform .18s cubic-bezier(.2,.7,.3,1), box-shadow .18s ease, filter .18s ease !important;
+  }
+  [style*="linear-gradient(135deg"]::before{
+    content:""; position:absolute; top:0; left:-130%; width:55%; height:100%;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);
+    transform:skewX(-18deg); transition:left .55s ease; pointer-events:none;
+  }
+  [style*="linear-gradient(135deg"]::after{
+    content:"\2192"; margin-left:9px; display:inline-block;
+    transition:transform .18s ease;
+  }
+  [style*="linear-gradient(135deg"]:hover{
+    transform:translateY(-2px) !important;
+    box-shadow:0 18px 36px -10px rgba(120,160,255,.6) !important;
+    filter:saturate(1.07) brightness(1.03);
+  }
+  [style*="linear-gradient(135deg"]:hover::before{ left:135%; }
+  [style*="linear-gradient(135deg"]:hover::after{ transform:translateX(4px); }
+  [style*="linear-gradient(135deg"]:active{ transform:translateY(0) !important; box-shadow:0 6px 16px -8px rgba(120,160,255,.6) !important; }
+</style>
+</helmet>
+
+<div style="background:#0A0B10;color:#EAECEF;font-family:'IBM Plex Sans',sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden">
+
+  <nav style="position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:15px 32px;background:rgba(10,11,16,0.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.07)">
+    <button onClick="{{ goHome }}" style="display:flex;align-items:center;gap:12px;background:none;border:none;cursor:pointer;padding:0">
+      <span style="position:relative;width:30px;height:18px;display:inline-block">
+        <span style="position:absolute;left:1px;top:2px;width:14px;height:14px;background:#9B8CFF;border-radius:4px;transform:rotate(45deg)"></span>
+        <span style="position:absolute;left:11px;top:2px;width:14px;height:14px;background:#58CFE6;border-radius:4px;transform:rotate(45deg);mix-blend-mode:screen"></span>
+      </span>
+      <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;color:#EAECEF;letter-spacing:-0.01em">Two Dreams Labs</span>
+    </button>
+    <div style="display:flex;align-items:center;gap:4px">
+      <sc-for list="{{ nav }}" as="item" hint-placeholder-count="4">
+        <button onClick="{{ item.onClick }}" style="background:none;border:none;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;font-size:14px;font-weight:500;padding:8px 14px;color:{{ item.color }};transition:color .15s" style-hover="color:#EAECEF">{{ item.label }}</button>
+      </sc-for>
+      <button onClick="{{ goContact }}" style="margin-left:10px;background:linear-gradient(135deg,#9B8CFF,#58CFE6);color:#0A0B10;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:14px;padding:10px 18px;border:none;border-radius:9px;cursor:pointer;transition:transform .15s,box-shadow .15s" style-hover="transform:translateY(-1px);box-shadow:0 8px 24px -8px rgba(120,160,255,0.6)">Start free</button>
+    </div>
+  </nav>
+
+  <!-- ================= HOME ================= -->
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+  <section style="position:relative;overflow:hidden;padding:96px 32px 64px">
+    <div style="position:absolute;top:-220px;left:50%;width:1000px;height:600px;background:radial-gradient(ellipse at center, rgba(155,140,255,0.20), rgba(88,207,230,0.08) 45%, transparent 72%);pointer-events:none;animation:tdl-drift 14s ease-in-out infinite"></div>
+    <div style="position:relative;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:center">
+      <div data-reveal>
+        <div style="display:inline-flex;align-items:center;gap:9px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#9AA3B2;border:1px solid rgba(255,255,255,0.10);background:rgba(255,255,255,0.03);padding:6px 12px;border-radius:20px"><span style="width:7px;height:7px;border-radius:50%;background:#58CFE6;animation:tdl-pulse 1.6s infinite"></span>Indie studio · game infrastructure</div>
+        <h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:58px;line-height:1.03;letter-spacing:-0.03em;color:#EAECEF;margin:20px 0 0;text-wrap:balance">Build, ship and operate games — <span style="background:linear-gradient(120deg,#9B8CFF,#58CFE6);-webkit-background-clip:text;background-clip:text;color:transparent">faster</span>.</h1>
+        <p style="font-size:18px;line-height:1.6;color:#9AA3B2;margin:22px 0 0;max-width:540px">Two Dreams Labs builds the tools modern game teams run on: <strong style="color:#EAECEF;font-weight:600">DreamCI</strong> for Unity CI/CD, <strong style="color:#EAECEF;font-weight:600">Mirage</strong>, an AI-first 2D engine that ships any 2D game to Web, Desktop and Mobile, and <strong style="color:#EAECEF;font-weight:600">Bennu</strong> for LiveOps across web2 and web3.</p>
+        <div style="display:flex;gap:12px;margin-top:30px">
+          <button onClick="{{ goProducts }}" style="background:linear-gradient(135deg,#9B8CFF,#58CFE6);color:#0A0B10;font-weight:600;font-size:15px;padding:14px 24px;border:none;border-radius:10px;cursor:pointer;transition:transform .15s,box-shadow .15s" style-hover="transform:translateY(-2px);box-shadow:0 14px 34px -12px rgba(120,160,255,0.7)">Explore the products</button>
+          <button onClick="{{ goAbout }}" style="background:transparent;color:#EAECEF;font-weight:500;font-size:15px;padding:14px 24px;border:1px solid rgba(255,255,255,0.16);border-radius:10px;cursor:pointer;transition:border-color .15s" style-hover="border-color:rgba(255,255,255,0.34)">Meet the studio</button>
+        </div>
+      </div>
+
+      <div data-reveal data-delay="120">
+        <div style="display:flex;gap:8px;margin-bottom:12px">
+          <sc-for list="{{ heroTabs }}" as="tab" hint-placeholder-count="3">
+            <button onClick="{{ tab.onClick }}" style="display:inline-flex;align-items:center;gap:7px;background:{{ tab.bg }};border:1px solid {{ tab.border }};color:{{ tab.color }};font-family:'IBM Plex Sans',sans-serif;font-size:13px;font-weight:500;padding:7px 13px;border-radius:9px;cursor:pointer;transition:background .18s,border-color .18s,color .18s" style-hover="color:#EAECEF;border-color:{{ tab.accentBorder }}">
+              <span style="width:7px;height:7px;border-radius:50%;background:{{ tab.accent }}"></span>{{ tab.name }}
+            </button>
+          </sc-for>
+        </div>
+        <div style="position:relative;background:#0E1016;border:1px solid rgba(255,255,255,0.10);border-radius:16px;box-shadow:0 40px 100px -40px rgba(0,0,0,0.9);overflow:hidden;animation:tdl-float 7s ease-in-out infinite">
+          <div style="position:absolute;top:0;left:0;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.06),transparent);animation:tdl-sheen 6s ease-in-out infinite;pointer-events:none;z-index:2"></div>
+          <div style="display:flex;align-items:center;gap:8px;padding:13px 16px;border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.02)">
+            <span style="width:11px;height:11px;border-radius:50%;background:#3a3f49"></span><span style="width:11px;height:11px;border-radius:50%;background:#3a3f49"></span><span style="width:11px;height:11px;border-radius:50%;background:#3a3f49"></span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#69707D;margin-left:8px">{{ heroTitle }}</span>
+          </div>
+
+          <sc-if value="{{ isHeroDream }}" hint-placeholder-val="{{ true }}">
+          <div style="padding:20px;min-height:312px">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#9AA3B2">two-dreams/skybound</span>
+              <span style="display:inline-flex;align-items:center;gap:7px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#58CFE6;background:rgba(88,207,230,0.10);border:1px solid rgba(88,207,230,0.25);padding:4px 10px;border-radius:20px"><span style="width:7px;height:7px;border-radius:50%;background:#58CFE6;animation:tdl-pulse 1.4s infinite"></span>Building</span>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:16px">
+              <sc-for list="{{ targets }}" as="t" hint-placeholder-count="6">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#9AA3B2;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);padding:5px 10px;border-radius:7px">{{ t }}</span>
+              </sc-for>
+            </div>
+            <div style="margin-top:18px;display:flex;flex-direction:column;gap:2px">
+              <sc-for list="{{ stages }}" as="s" hint-placeholder-count="5">
+                <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:9px;background:rgba(255,255,255,0.02)">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#69707D">{{ s.n }}</span>
+                  <span style="flex:1;font-size:13px;color:#EAECEF">{{ s.label }}</span>
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#69707D">{{ s.meta }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="margin-top:14px;background:#06070A;border:1px solid rgba(255,255,255,0.06);border-radius:9px;padding:12px 14px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;line-height:1.7;color:#69707D">
+              <div><span style="color:#58CFE6">$</span> act -W .github/workflows/unity.yml</div>
+              <div>[unity-build] restoring Library cache from R2…</div>
+              <div style="color:#9AA3B2">[unity-build] BuildPlayer: WebGL <span style="color:#58CFE6;animation:tdl-blink 1s infinite">▍</span></div>
+            </div>
+          </div>
+          </sc-if>
+
+          <sc-if value="{{ isHeroMirage }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:16px;min-height:312px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#9AA3B2">scene · level_01</span>
+              <span style="display:inline-flex;align-items:center;gap:7px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#58CFE6;background:rgba(88,207,230,0.10);border:1px solid rgba(88,207,230,0.25);padding:4px 10px;border-radius:20px"><span style="width:7px;height:7px;border-radius:50%;background:#58CFE6;animation:tdl-pulse 1.4s infinite"></span>Live preview</span>
+            </div>
+            <div style="position:relative;height:190px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);background-color:#08090D;background-image:linear-gradient(rgba(88,207,230,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(88,207,230,0.06) 1px,transparent 1px);background-size:24px 24px;overflow:hidden">
+              <div style="position:absolute;left:52px;bottom:32px;width:28px;height:28px;border-radius:6px;background:#58CFE6;box-shadow:0 0 18px rgba(88,207,230,0.6)"></div>
+              <div style="position:absolute;right:72px;bottom:32px;width:26px;height:26px;border-radius:6px;background:#9B8CFF;animation:tdl-float 3.2s ease-in-out infinite"></div>
+              <div style="position:absolute;left:0;bottom:0;width:100%;height:24px;background:rgba(255,255,255,0.05);border-top:1px solid rgba(255,255,255,0.08)"></div>
+              <div style="position:absolute;top:12px;right:12px;display:flex;gap:6px">
+                <sc-for list="{{ players }}" as="pl" hint-placeholder-count="3">
+                  <span style="display:inline-flex;align-items:center;gap:5px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#EAECEF;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);padding:3px 7px;border-radius:12px"><span style="width:6px;height:6px;border-radius:50%;background:{{ pl.c }};animation:tdl-pulse 1.6s infinite"></span>{{ pl.n }}</span>
+                </sc-for>
+              </div>
+            </div>
+            <div style="margin-top:12px;display:flex;align-items:center;gap:10px;background:#08090D;border:1px solid rgba(88,207,230,0.25);border-radius:9px;padding:11px 13px">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#58CFE6;border:1px solid rgba(88,207,230,0.4);border-radius:5px;padding:2px 7px">AI</span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#9AA3B2;flex:1">Generate a patrolling enemy with line-of-sight<span style="color:#58CFE6;animation:tdl-blink 1s infinite">▍</span></span>
+            </div>
+          </div>
+          </sc-if>
+
+          <sc-if value="{{ isHeroBennu }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:18px;min-height:312px">
+            <div style="display:flex;align-items:center;justify-content:space-between;background:#08090D;border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:13px 15px">
+              <div><div style="font-size:14px;color:#EAECEF;font-weight:600">Weekend XP Boost</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#69707D;margin-top:3px">live event · ends in 41h</div></div>
+              <div style="display:flex;align-items:center;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#E2A857;border:1px solid rgba(226,168,87,0.4);border-radius:5px;padding:2px 6px">onchain</span><span style="width:38px;height:21px;border-radius:11px;background:rgba(88,207,230,0.3);position:relative;display:inline-block"><span style="position:absolute;right:2px;top:2px;width:17px;height:17px;border-radius:50%;background:#58CFE6"></span></span></div>
+            </div>
+            <div style="display:flex;align-items:flex-end;gap:6px;height:88px;margin:16px 0 6px;padding:0 2px">
+              <sc-for list="{{ bars }}" as="b" hint-placeholder-count="9">
+                <span style="flex:1;height:{{ b.h }};background:linear-gradient(180deg,#E2A857,rgba(226,168,87,0.25));border-radius:3px 3px 0 0"></span>
+              </sc-for>
+            </div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#69707D">DAU · last 9 days · +18% on event</div>
+            <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#9AA3B2"><span style="font-family:'IBM Plex Mono',monospace">deploy v1.4 → stable</span><span style="color:#58CFE6;font-family:'IBM Plex Mono',monospace;font-size:11px">promoted</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#9AA3B2"><span style="font-family:'IBM Plex Mono',monospace">remote config · drop_rate</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#E2A857">0.12 → 0.18</span></div>
+            </div>
+          </div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- marquee -->
+  <section style="padding:8px 0 0;border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);overflow:hidden;position:relative">
+    <div style="position:absolute;left:0;top:0;width:120px;height:100%;background:linear-gradient(90deg,#0A0B10,transparent);z-index:2;pointer-events:none"></div>
+    <div style="position:absolute;right:0;top:0;width:120px;height:100%;background:linear-gradient(270deg,#0A0B10,transparent);z-index:2;pointer-events:none"></div>
+    <div style="display:flex;width:max-content;animation:tdl-marquee 28s linear infinite;padding:18px 0">
+      <sc-for list="{{ marquee }}" as="m" hint-placeholder-count="24">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#69707D;padding:0 28px;white-space:nowrap">{{ m }}</span>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- three products -->
+  <section style="padding:88px 32px 16px">
+    <div style="max-width:1200px;margin:0 auto">
+      <div data-reveal style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:#9B8CFF">Three products, one studio</div>
+      <h2 data-reveal data-delay="60" style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:38px;letter-spacing:-0.02em;color:#EAECEF;margin:14px 0 40px;max-width:680px;text-wrap:balance">Everything a modern game team needs to ship and run.</h2>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
+        <sc-for list="{{ products }}" as="p" hint-placeholder-count="3">
+          <button data-reveal data-delay="{{ p.delay }}" onClick="{{ p.onClick }}" style="text-align:left;background:#101218;border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:28px;cursor:pointer;display:flex;flex-direction:column;gap:14px;transition:transform .2s,border-color .2s,box-shadow .2s" style-hover="transform:translateY(-4px);border-color:{{ p.accentBorder }};box-shadow:0 24px 50px -28px rgba(0,0,0,0.9)">
+            <span style="width:38px;height:38px;border-radius:10px;background:{{ p.iconBg }};border:1px solid {{ p.accentBorder }};display:flex;align-items:center;justify-content:center">
+              <span style="width:14px;height:14px;background:{{ p.accent }};border-radius:{{ p.iconRadius }};transform:rotate({{ p.iconRot }})"></span>
+            </span>
+            <div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:{{ p.accent }}">{{ p.kicker }}</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;color:#EAECEF;margin-top:4px">{{ p.name }}</div>
+            </div>
+            <p style="font-size:15px;line-height:1.55;color:#9AA3B2;margin:0;flex:1">{{ p.tagline }}</p>
+            <span style="font-size:14px;color:{{ p.accent }};font-weight:500">Learn more →</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- two dreams narrative -->
+  <section style="padding:88px 32px">
+    <div style="max-width:900px;margin:0 auto;text-align:center">
+      <div data-reveal style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:#58CFE6">The two dreams</div>
+      <h2 data-reveal data-delay="60" style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:34px;letter-spacing:-0.02em;color:#EAECEF;margin:14px auto 0;max-width:620px;text-wrap:balance">We build the tools we wish we had.</h2>
+      <p data-reveal data-delay="120" style="font-size:18px;line-height:1.65;color:#9AA3B2;margin:18px auto 0;max-width:600px">Every rough edge we hit making our own games becomes a feature in our products — and every improvement gets the next game out the door sooner.</p>
+    </div>
+  </section>
+
+  <!-- stats -->
+  <section style="padding:0 32px 88px">
+    <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;border-top:1px solid rgba(255,255,255,0.07);border-bottom:1px solid rgba(255,255,255,0.07);padding:36px 0">
+      <div data-reveal><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:34px;color:#EAECEF" data-count="10">10</div><div style="font-size:13px;color:#69707D;margin-top:4px">build targets per matrix</div></div>
+      <div data-reveal data-delay="80"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:34px;color:#EAECEF">2</div><div style="font-size:13px;color:#69707D;margin-top:4px">runtimes · web + desktop</div></div>
+      <div data-reveal data-delay="160"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:34px;color:#EAECEF" data-count="3">3</div><div style="font-size:13px;color:#69707D;margin-top:4px">release channels</div></div>
+      <div data-reveal data-delay="240"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:34px;background:linear-gradient(120deg,#9B8CFF,#E2A857);-webkit-background-clip:text;background-clip:text;color:transparent">web2+web3</div><div style="font-size:13px;color:#69707D;margin-top:4px">economies via Bennu</div></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="padding:0 32px 96px">
+    <div data-reveal style="max-width:1100px;margin:0 auto;position:relative;overflow:hidden;background:#0E1016;border:1px solid rgba(255,255,255,0.10);border-radius:20px;padding:56px 48px;text-align:center">
+      <div style="position:absolute;top:-160px;left:50%;transform:translateX(-50%);width:700px;height:400px;background:radial-gradient(ellipse,rgba(155,140,255,0.16),transparent 70%);pointer-events:none"></div>
+      <h2 style="position:relative;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:34px;letter-spacing:-0.02em;color:#EAECEF;margin:0">Ready to ship faster?</h2>
+      <p style="position:relative;font-size:17px;color:#9AA3B2;margin:14px auto 28px;max-width:480px">Join the early access program and help shape the future of game infrastructure.</p>
+      <button onClick="{{ goContact }}" style="position:relative;background:linear-gradient(135deg,#9B8CFF,#58CFE6);color:#0A0B10;font-weight:600;font-size:15px;padding:14px 28px;border:none;border-radius:10px;cursor:pointer;transition:transform .15s,box-shadow .15s" style-hover="transform:translateY(-2px);box-shadow:0 14px 34px -12px rgba(120,160,255,0.7)">Request early access</button>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- ================= PRODUCTS ================= -->
+  <sc-if value="{{ isProducts }}" hint-placeholder-val="{{ false }}">
+  <section style="position:relative;overflow:hidden;padding:88px 32px 48px;text-align:center">
+    <div style="position:absolute;top:-180px;left:50%;width:900px;height:480px;background:radial-gradient(ellipse at center, rgba(155,140,255,0.14), rgba(88,207,230,0.06) 45%, transparent 72%);pointer-events:none;animation:tdl-drift 16s ease-in-out infinite"></div>
+    <div style="position:relative;max-width:760px;margin:0 auto">
+      <div data-reveal style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:#9B8CFF">Products</div>
+      <h1 data-reveal data-delay="60" style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:50px;line-height:1.06;letter-spacing:-0.03em;color:#EAECEF;margin:16px 0 0;text-wrap:balance">A toolchain for the whole game lifecycle.</h1>
+      <p data-reveal data-delay="120" style="font-size:18px;line-height:1.6;color:#9AA3B2;margin:20px auto 0;max-width:560px">Build with Mirage, automate with DreamCI, operate with Bennu — designed to work together, useful on their own.</p>
+    </div>
+  </section>
+
+  <!-- DreamCI -->
+  <section style="padding:56px 32px;border-top:1px solid rgba(255,255,255,0.06)">
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:0.9fr 1.1fr;gap:56px;align-items:center">
+      <div data-reveal>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#9B8CFF">DreamCI · Unity CI/CD</div>
+        <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:34px;letter-spacing:-0.02em;color:#EAECEF;margin:12px 0 0">Stop running Unity builds on your machine.</h2>
+        <p style="font-size:16px;line-height:1.6;color:#9AA3B2;margin:14px 0 24px">Push your repo and get a build in minutes — WebGL, mobile or desktop — each with a shareable link. Send it to your team and start testing right away.</p>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <sc-for list="{{ dreamFeatures }}" as="f" hint-placeholder-count="5">
+            <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:#9B8CFF;margin-top:2px">◆</span><div><span style="color:#EAECEF;font-weight:600;font-size:15px">{{ f.t }}</span><span style="color:#9AA3B2;font-size:15px"> — {{ f.d }}</span></div></div>
+          </sc-for>
+        </div>
+      </div>
+      <div data-reveal data-delay="120" style="background:#0E1016;border:1px solid rgba(255,255,255,0.10);border-radius:16px;box-shadow:0 30px 70px -34px rgba(0,0,0,0.9);overflow:hidden">
+        <div style="display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.02)"><span style="width:10px;height:10px;border-radius:50%;background:#3a3f49"></span><span style="width:10px;height:10px;border-radius:50%;background:#3a3f49"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#69707D;margin-left:6px">pipeline · two-dreams/skybound</span></div>
+        <div style="padding:20px;display:flex;flex-direction:column;gap:2px">
+          <sc-for list="{{ stages }}" as="s" hint-placeholder-count="5">
+            <div style="display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:9px;background:rgba(255,255,255,0.02)"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#69707D">{{ s.n }}</span><span style="flex:1;font-size:13px;color:#EAECEF">{{ s.label }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#69707D">{{ s.meta }}</span></div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mirage -->
+  <section style="padding:56px 32px;border-top:1px solid rgba(255,255,255,0.06)">
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.1fr 0.9fr;gap:56px;align-items:center">
+      <div data-reveal style="order:2">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#58CFE6">Mirage · AI-first 2D engine</div>
+        <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:34px;letter-spacing:-0.02em;color:#EAECEF;margin:12px 0 0">The fastest, most portable 2D engine.</h2>
+        <p style="font-size:16px;line-height:1.6;color:#9AA3B2;margin:14px 0 24px">Build any 2D game and ship it everywhere — Web, Desktop and Mobile — from a single project. An ECS-core engine, AI-first at the core of the creation loop. Describe it, iterate in real time, ship in a click.</p>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <sc-for list="{{ mirageFeatures }}" as="f" hint-placeholder-count="4">
+            <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:#58CFE6;margin-top:2px">◆</span><div><span style="color:#EAECEF;font-weight:600;font-size:15px">{{ f.t }}</span><span style="color:#9AA3B2;font-size:15px"> — {{ f.d }}</span></div></div>
+          </sc-for>
+        </div>
+      </div>
+      <div data-reveal data-delay="120" style="order:1;background:#0E1016;border:1px solid rgba(255,255,255,0.10);border-radius:16px;box-shadow:0 30px 70px -34px rgba(0,0,0,0.9);overflow:hidden">
+        <div style="display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.02)"><span style="width:10px;height:10px;border-radius:50%;background:#3a3f49"></span><span style="width:10px;height:10px;border-radius:50%;background:#3a3f49"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#69707D;margin-left:6px">Mirage · platformer.mir</span></div>
+        <div style="padding:16px">
+          <div style="position:relative;height:180px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);background-color:#08090D;background-image:linear-gradient(rgba(88,207,230,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(88,207,230,0.06) 1px,transparent 1px);background-size:24px 24px;overflow:hidden">
+            <div style="position:absolute;left:48px;bottom:30px;width:26px;height:26px;border-radius:6px;background:#58CFE6;box-shadow:0 0 18px rgba(88,207,230,0.6)"></div>
+            <div style="position:absolute;right:64px;bottom:30px;width:24px;height:24px;border-radius:6px;background:#9B8CFF;animation:tdl-float 3.2s ease-in-out infinite"></div>
+            <div style="position:absolute;left:0;bottom:0;width:100%;height:22px;background:rgba(255,255,255,0.05);border-top:1px solid rgba(255,255,255,0.08)"></div>
+            <div style="position:absolute;top:12px;right:12px;display:flex;gap:6px">
+              <sc-for list="{{ players }}" as="pl" hint-placeholder-count="3">
+                <span style="display:inline-flex;align-items:center;gap:5px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#EAECEF;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);padding:3px 7px;border-radius:12px"><span style="width:6px;height:6px;border-radius:50%;background:{{ pl.c }};animation:tdl-pulse 1.6s infinite"></span>{{ pl.n }}</span>
+              </sc-for>
+            </div>
+          </div>
+          <div style="margin-top:12px;display:flex;align-items:center;gap:10px;background:#08090D;border:1px solid rgba(88,207,230,0.25);border-radius:9px;padding:11px 13px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#58CFE6;border:1px solid rgba(88,207,230,0.4);border-radius:5px;padding:2px 7px">AI</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#9AA3B2;flex:1">Generate a patrolling enemy with line-of-sight<span style="color:#58CFE6;animation:tdl-blink 1s infinite">▍</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bennu -->
+  <section style="padding:56px 32px 24px;border-top:1px solid rgba(255,255,255,0.06)">
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:0.9fr 1.1fr;gap:56px;align-items:center">
+      <div data-reveal>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#E2A857">Bennu · LiveOps + DevOps</div>
+        <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:34px;letter-spacing:-0.02em;color:#EAECEF;margin:12px 0 0">Operate live games — web2 and web3.</h2>
+        <p style="font-size:16px;line-height:1.6;color:#9AA3B2;margin:14px 0 24px">Run live events, remote config, deploys and player economies from one place — across both offchain backends and onchain assets.</p>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <sc-for list="{{ bennuFeatures }}" as="f" hint-placeholder-count="5">
+            <div style="display:flex;gap:12px;align-items:flex-start"><span style="color:#E2A857;margin-top:2px">◆</span><div><span style="color:#EAECEF;font-weight:600;font-size:15px">{{ f.t }}</span><span style="color:#9AA3B2;font-size:15px"> — {{ f.d }}</span></div></div>
+          </sc-for>
+        </div>
+      </div>
+      <div data-reveal data-delay="120" style="background:#0E1016;border:1px solid rgba(255,255,255,0.10);border-radius:16px;box-shadow:0 30px 70px -34px rgba(0,0,0,0.9);overflow:hidden">
+        <div style="display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.02)"><span style="width:10px;height:10px;border-radius:50%;background:#3a3f49"></span><span style="width:10px;height:10px;border-radius:50%;background:#3a3f49"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#69707D;margin-left:6px">Bennu · liveops</span></div>
+        <div style="padding:18px">
+          <div style="display:flex;align-items:center;justify-content:space-between;background:#08090D;border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:13px 15px">
+            <div><div style="font-size:14px;color:#EAECEF;font-weight:600">Weekend XP Boost</div><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#69707D;margin-top:3px">live event · ends in 41h</div></div>
+            <div style="display:flex;align-items:center;gap:8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#E2A857;border:1px solid rgba(226,168,87,0.4);border-radius:5px;padding:2px 6px">onchain</span><span style="width:38px;height:21px;border-radius:11px;background:rgba(88,207,230,0.3);position:relative;display:inline-block"><span style="position:absolute;right:2px;top:2px;width:17px;height:17px;border-radius:50%;background:#58CFE6"></span></span></div>
+          </div>
+          <div style="display:flex;align-items:flex-end;gap:6px;height:74px;margin:16px 0 6px;padding:0 2px">
+            <sc-for list="{{ bars }}" as="b" hint-placeholder-count="9">
+              <span style="flex:1;height:{{ b.h }};background:linear-gradient(180deg,#E2A857,rgba(226,168,87,0.25));border-radius:3px 3px 0 0"></span>
+            </sc-for>
+          </div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#69707D">DAU · last 9 days · +18% on event</div>
+          <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#9AA3B2"><span style="font-family:'IBM Plex Mono',monospace">deploy v1.4 → stable</span><span style="color:#58CFE6;font-family:'IBM Plex Mono',monospace;font-size:11px">promoted</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#9AA3B2"><span style="font-family:'IBM Plex Mono',monospace">remote config · drop_rate</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#E2A857">0.12 → 0.18</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:48px 32px 96px">
+    <div data-reveal style="max-width:1100px;margin:0 auto;position:relative;overflow:hidden;background:#0E1016;border:1px solid rgba(255,255,255,0.10);border-radius:20px;padding:48px;text-align:center">
+      <div style="position:absolute;top:-160px;left:50%;transform:translateX(-50%);width:700px;height:380px;background:radial-gradient(ellipse,rgba(88,207,230,0.14),transparent 70%);pointer-events:none"></div>
+      <h2 style="position:relative;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:30px;letter-spacing:-0.02em;color:#EAECEF;margin:0">All three are in early access.</h2>
+      <p style="position:relative;font-size:16px;color:#9AA3B2;margin:12px auto 26px;max-width:460px">Commercial plans are firming up. Get in early and help shape them.</p>
+      <button onClick="{{ goContact }}" style="position:relative;background:linear-gradient(135deg,#9B8CFF,#58CFE6);color:#0A0B10;font-weight:600;font-size:15px;padding:14px 26px;border:none;border-radius:10px;cursor:pointer;transition:transform .15s,box-shadow .15s" style-hover="transform:translateY(-2px);box-shadow:0 14px 34px -12px rgba(120,160,255,0.7)">Request early access</button>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- ================= ABOUT ================= -->
+  <sc-if value="{{ isAbout }}" hint-placeholder-val="{{ false }}">
+  <section style="padding:88px 32px 48px">
+    <div style="max-width:820px;margin:0 auto">
+      <div data-reveal style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:#9B8CFF">About the studio</div>
+      <h1 data-reveal data-delay="60" style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:46px;line-height:1.08;letter-spacing:-0.03em;color:#EAECEF;margin:16px 0 0;text-wrap:balance">We're builders on both sides of the screen.</h1>
+      <p data-reveal data-delay="120" style="font-size:19px;line-height:1.65;color:#9AA3B2;margin:24px 0 0">Two Dreams Labs LLC is a small, independent game studio. We make our own games — and because we live in that pipeline every day, we build the tools that make creating, shipping and operating games faster and calmer for teams like ours.</p>
+      <p data-reveal data-delay="160" style="font-size:19px;line-height:1.65;color:#9AA3B2;margin:18px 0 0">That's the loop behind DreamCI, Mirage and Bennu: real problems from real game-making, turned into infrastructure anyone can use.</p>
+    </div>
+  </section>
+
+  <section style="padding:24px 32px 64px">
+    <div style="max-width:1080px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+      <div data-reveal style="background:#101218;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:28px"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;color:#EAECEF">Dogfooded</div><p style="font-size:15px;line-height:1.6;color:#9AA3B2;margin:8px 0 0">Our own games run on our tools. If it isn't good enough for us, it doesn't ship to you.</p></div>
+      <div data-reveal data-delay="100" style="background:#101218;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:28px"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;color:#EAECEF">No lock-in</div><p style="font-size:15px;line-height:1.6;color:#9AA3B2;margin:8px 0 0">Open standards where it counts — Actions-compatible workflows, portable projects, your data.</p></div>
+      <div data-reveal data-delay="200" style="background:#101218;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:28px"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;color:#EAECEF">Secure by design</div><p style="font-size:15px;line-height:1.6;color:#9AA3B2;margin:8px 0 0">Multi-tenant with row-level security, encrypted secrets, scoped keys and full audit logs.</p></div>
+    </div>
+  </section>
+
+  <section style="padding:0 32px 96px">
+    <div data-reveal style="max-width:820px;margin:0 auto;background:#0E1016;border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:40px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:#58CFE6">Where we are now</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:28px;letter-spacing:-0.02em;color:#EAECEF;margin:14px 0 0">Technically deep, and entering private beta.</h2>
+      <p style="font-size:16px;line-height:1.65;color:#9AA3B2;margin:14px 0 0">DreamCI already has a complete dashboard, RBAC, billing scaffolding, audit, live logs and a multi-tenant architecture. Mirage and Bennu are in active development. We're hardening everything for production — want to pilot with your studio? We'd love to talk.</p>
+      <button onClick="{{ goContact }}" style="margin-top:24px;background:linear-gradient(135deg,#9B8CFF,#58CFE6);color:#0A0B10;font-weight:600;font-size:15px;padding:13px 24px;border:none;border-radius:10px;cursor:pointer;transition:transform .15s" style-hover="transform:translateY(-2px)">Join the beta</button>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- ================= CONTACT ================= -->
+  <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+  <section style="padding:88px 32px 96px">
+    <div style="max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start">
+      <div data-reveal>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:#9B8CFF">Get in touch</div>
+        <h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:44px;line-height:1.08;letter-spacing:-0.03em;color:#EAECEF;margin:16px 0 0;text-wrap:balance">Let's build something fast.</h1>
+        <p style="font-size:17px;line-height:1.6;color:#9AA3B2;margin:18px 0 0">Tell us about your studio and what you're shipping. We'll set you up with early access.</p>
+        <div style="margin-top:32px;display:flex;flex-direction:column;gap:18px">
+          <div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#69707D;letter-spacing:0.1em">EMAIL</div><div style="font-size:16px;color:#EAECEF;margin-top:4px">hello@twodreamslabs.com</div></div>
+          <div><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#69707D;letter-spacing:0.1em">PRODUCTS</div><div style="font-size:16px;color:#EAECEF;margin-top:4px">DreamCI · Mirage · Bennu</div></div>
+        </div>
+      </div>
+      <div data-reveal data-delay="120" style="background:#101218;border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:32px">
+        <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:24px 0">
+            <span style="width:44px;height:44px;border-radius:50%;background:rgba(88,207,230,0.12);border:1px solid rgba(88,207,230,0.35);display:flex;align-items:center;justify-content:center;color:#58CFE6;font-size:20px">✓</span>
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;color:#EAECEF">Thanks — we'll be in touch.</div>
+            <p style="font-size:15px;color:#9AA3B2;margin:0">Your message is on its way to the studio. Expect a reply within a couple of days.</p>
+          </div>
+        </sc-if>
+        <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+          <form onSubmit="{{ submit }}" style="display:flex;flex-direction:column;gap:16px">
+            <div><label style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#9AA3B2;letter-spacing:0.08em">NAME</label><input required="true" style="width:100%;margin-top:7px;background:#0A0B10;border:1px solid rgba(255,255,255,0.12);border-radius:9px;padding:12px 14px;color:#EAECEF;font-family:'IBM Plex Sans',sans-serif;font-size:15px;outline:none" style-focus="border-color:#9B8CFF"></div>
+            <div><label style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#9AA3B2;letter-spacing:0.08em">EMAIL</label><input required="true" type="email" style="width:100%;margin-top:7px;background:#0A0B10;border:1px solid rgba(255,255,255,0.12);border-radius:9px;padding:12px 14px;color:#EAECEF;font-family:'IBM Plex Sans',sans-serif;font-size:15px;outline:none" style-focus="border-color:#9B8CFF"></div>
+            <div><label style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#9AA3B2;letter-spacing:0.08em">WHICH PRODUCT?</label><select style="width:100%;margin-top:7px;background:#0A0B10;border:1px solid rgba(255,255,255,0.12);border-radius:9px;padding:12px 14px;color:#EAECEF;font-family:'IBM Plex Sans',sans-serif;font-size:15px;outline:none" style-focus="border-color:#9B8CFF"><option>DreamCI — Unity CI/CD</option><option>Mirage — game engine</option><option>Bennu — LiveOps</option><option>All of them</option></select></div>
+            <div><label style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#9AA3B2;letter-spacing:0.08em">WHAT ARE YOU BUILDING?</label><textarea rows="4" style="width:100%;margin-top:7px;background:#0A0B10;border:1px solid rgba(255,255,255,0.12);border-radius:9px;padding:12px 14px;color:#EAECEF;font-family:'IBM Plex Sans',sans-serif;font-size:15px;outline:none;resize:vertical" style-focus="border-color:#9B8CFF"></textarea></div>
+            <button type="submit" style="background:linear-gradient(135deg,#9B8CFF,#58CFE6);color:#0A0B10;font-family:'IBM Plex Sans',sans-serif;font-weight:600;font-size:15px;padding:14px;border:none;border-radius:10px;cursor:pointer;transition:transform .15s" style-hover="transform:translateY(-2px)">Request early access</button>
+          </form>
+        </sc-if>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- ================= FOOTER ================= -->
+  <footer style="border-top:1px solid rgba(255,255,255,0.07);padding:48px 32px">
+    <div style="max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:32px">
+      <div style="max-width:320px">
+        <div style="display:flex;align-items:center;gap:11px">
+          <span style="position:relative;width:28px;height:16px;display:inline-block">
+            <span style="position:absolute;left:1px;top:1px;width:13px;height:13px;background:#9B8CFF;border-radius:4px;transform:rotate(45deg)"></span>
+            <span style="position:absolute;left:10px;top:1px;width:13px;height:13px;background:#58CFE6;border-radius:4px;transform:rotate(45deg);mix-blend-mode:screen"></span>
+          </span>
+          <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:#EAECEF">Two Dreams Labs</span>
+        </div>
+        <p style="font-size:14px;line-height:1.6;color:#69707D;margin:14px 0 0">An indie studio building games — and the tools to ship and run them.</p>
+      </div>
+      <div style="display:flex;gap:56px;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#69707D;letter-spacing:0.12em;text-transform:uppercase">Products</div>
+          <button onClick="{{ goProducts }}" style="background:none;border:none;text-align:left;padding:0;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;font-size:14px;color:#9AA3B2" style-hover="color:#EAECEF">DreamCI</button>
+          <button onClick="{{ goProducts }}" style="background:none;border:none;text-align:left;padding:0;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;font-size:14px;color:#9AA3B2" style-hover="color:#EAECEF">Mirage</button>
+          <button onClick="{{ goProducts }}" style="background:none;border:none;text-align:left;padding:0;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;font-size:14px;color:#9AA3B2" style-hover="color:#EAECEF">Bennu</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#69707D;letter-spacing:0.12em;text-transform:uppercase">Studio</div>
+          <button onClick="{{ goAbout }}" style="background:none;border:none;text-align:left;padding:0;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;font-size:14px;color:#9AA3B2" style-hover="color:#EAECEF">About</button>
+          <button onClick="{{ goContact }}" style="background:none;border:none;text-align:left;padding:0;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;font-size:14px;color:#9AA3B2" style-hover="color:#EAECEF">Contact</button>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1200px;margin:36px auto 0;padding-top:24px;border-top:1px solid rgba(255,255,255,0.06);font-family:'IBM Plex Mono',monospace;font-size:12px;color:#69707D">© 2026 Two Dreams Labs LLC. All rights reserved.</div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { page: 'home', sent: false, heroTab: 'dreamci' };
+
+  go(p) {
+    this.setState({ page: p, sent: false });
+    try { window.scrollTo({ top: 0 }); } catch (e) {}
+  }
+
+  componentDidMount() { this._initReveal(); }
+  componentDidUpdate() { this._scan(); }
+  componentWillUnmount() { if (this._iv) clearInterval(this._iv); if (this._mo) this._mo.disconnect(); if (this._io) this._io.disconnect(); }
+
+  _reveal(el) {
+    el.setAttribute('data-reveal', 'in');
+    if (el.querySelectorAll) el.querySelectorAll('[data-count]').forEach((c) => this._countUp(c));
+  }
+
+  _countUp(el) {
+    const tgt = parseFloat(el.getAttribute('data-count'));
+    if (isNaN(tgt)) return;
+    if (this._reduce) { el.textContent = String(tgt); return; }
+    const dur = 1000, start = performance.now();
+    const step = (now) => {
+      const t = Math.min(1, (now - start) / dur);
+      const e = 1 - Math.pow(1 - t, 3);
+      el.textContent = String(Math.round(tgt * e));
+      if (t < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  _scan() {
+    if (typeof window === 'undefined') return;
+    const els = Array.from(document.querySelectorAll('[data-reveal]:not([data-reveal="in"])'));
+    if (this._reduce || !this._io) { els.forEach((e) => this._reveal(e)); return; }
+    els.forEach((e) => {
+      const d = e.getAttribute('data-delay');
+      if (d && !e.style.animationDelay) e.style.animationDelay = d + 'ms';
+      this._io.observe(e);
+    });
+  }
+
+  _initReveal() {
+    if (typeof window === 'undefined' || this._inited) return;
+    this._inited = true;
+    this._reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    if (this._reduce || !('IntersectionObserver' in window)) { this._scan(); return; }
+    this._io = new IntersectionObserver((ents) => {
+      ents.forEach((en) => {
+        if (en.isIntersecting) { this._reveal(en.target); this._io.unobserve(en.target); }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -5% 0px' });
+    this._scan();
+    // New nodes arrive when the page switches via setState — observe and scan them.
+    this._mo = new MutationObserver(() => requestAnimationFrame(() => this._scan()));
+    this._mo.observe(document.body, { childList: true, subtree: true });
+    // Ultimate safety net: anything already in the viewport gets revealed regardless of observer timing.
+    this._iv = setInterval(() => {
+      const vh = window.innerHeight || 0;
+      document.querySelectorAll('[data-reveal]:not([data-reveal="in"])').forEach((e) => {
+        const r = e.getBoundingClientRect();
+        if (r.top < vh && r.bottom > 0) this._reveal(e);
+      });
+    }, 500);
+  }
+
+  gameRef = (el) => { if (el) this._startGame(el); else this._stopGame(); };
+
+  _rr(ctx, x, y, w, h, r) {
+    if (ctx.roundRect) { ctx.beginPath(); ctx.roundRect(x, y, w, h, r); return; }
+    ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
+  }
+
+  _stopGame() { if (this._g) { cancelAnimationFrame(this._g.raf); if (this._g.cleanup) this._g.cleanup(); this._g = null; } }
+
+  _startGame(canvas) {
+    this._stopGame();
+    if (typeof window === 'undefined') return;
+    const ctx = canvas.getContext('2d');
+    const rand = (a, b) => a + Math.random() * (b - a);
+    const g = {
+      canvas, ctx, raf: 0, last: performance.now(), _init: false,
+      w: 0, h: 0, dpr: Math.min(2, window.devicePixelRatio || 1),
+      heroes: [
+        { x: 0, y: 0, vx: 0, vy: 0, col: '#58CFE6', cool: 0, hp: 100, down: 0, hurt: 0, hitT: 0 },
+        { x: 0, y: 0, vx: 0, vy: 0, col: '#9B8CFF', cool: 0.12, hp: 100, down: 0, hurt: 0, hitT: 0 },
+      ],
+      zoms: [], bullets: [], parts: [],
+      kills: 0, wave: 1, waveT: 0, spawnT: 0,
+      pointer: { x: 0, y: 0, until: 0 },
+    };
+    const onMove = (e) => { const r = canvas.getBoundingClientRect(); g.pointer.x = e.clientX - r.left; g.pointer.y = e.clientY - r.top; g.pointer.until = performance.now() + 1100; };
+    const onLeave = () => { g.pointer.until = 0; };
+    canvas.addEventListener('pointermove', onMove);
+    canvas.addEventListener('pointerleave', onLeave);
+    g.cleanup = () => { canvas.removeEventListener('pointermove', onMove); canvas.removeEventListener('pointerleave', onLeave); };
+    this._g = g;
+    const loop = (now) => {
+      const gg = this._g; if (!gg) return;
+      let dt = (now - gg.last) / 1000; if (dt > 0.05) dt = 0.05; if (dt < 0) dt = 0; gg.last = now;
+      this._gameStep(gg, dt, rand);
+      this._gameDraw(gg);
+      gg.raf = requestAnimationFrame(loop);
+    };
+    g.raf = requestAnimationFrame(loop);
+  }
+
+  _spawnZom(g, rand) {
+    const W = g.w, H = g.h, edge = Math.floor(rand(0, 4));
+    let x, y;
+    if (edge === 0) { x = rand(0, W); y = -8; } else if (edge === 1) { x = W + 8; y = rand(0, H); } else if (edge === 2) { x = rand(0, W); y = H + 8; } else { x = -8; y = rand(0, H); }
+    const roll = Math.random(); let z;
+    if (g.wave >= 3 && roll < 0.12) z = { type: 'brute', r: 11, hp: 5, speed: 16, dmg: 26, col: '#8E63E0' };
+    else if (roll < 0.45) z = { type: 'runner', r: 5.5, hp: 1, speed: rand(42, 54), dmg: 12, col: '#E2627A' };
+    else z = { type: 'walker', r: 7, hp: 2, speed: rand(22, 30), dmg: 16, col: '#C0566B' };
+    z.x = x; z.y = y; z.ang = 0; z.flash = 0; z.hp += Math.floor(g.wave / 6);
+    g.zoms.push(z);
+  }
+
+  _spark(g, x, y, n, col, life) { for (let k = 0; k < n; k++) { const a = Math.random() * 6.283, s = Math.random() * 60 + 18; g.parts.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, life, col }); } }
+
+  _gameStep(g, dt, rand) {
+    const cw = g.canvas.clientWidth || 480, ch = g.canvas.clientHeight || 200;
+    if (cw !== g.w || ch !== g.h) {
+      g.w = cw; g.h = ch;
+      g.canvas.width = Math.round(cw * g.dpr); g.canvas.height = Math.round(ch * g.dpr);
+      g.ctx.setTransform(g.dpr, 0, 0, g.dpr, 0, 0);
+      if (!g._init) { g.heroes[0].x = cw * 0.42; g.heroes[0].y = ch * 0.55; g.heroes[1].x = cw * 0.58; g.heroes[1].y = ch * 0.45; g._init = true; }
+    }
+    const W = g.w, H = g.h, cx = W / 2, cy = H / 2;
+    g.waveT += dt; if (g.waveT > 11 && g.wave < 30) { g.wave++; g.waveT = 0; }
+    const interval = Math.max(0.34, 1.1 - g.wave * 0.04);
+    g.spawnT -= dt;
+    if (g.spawnT <= 0 && g.zoms.length < 56) { g.spawnT = interval; this._spawnZom(g, rand); }
+    const pActive = performance.now() < g.pointer.until;
+    for (const h of g.heroes) {
+      if (h.hurt > 0) h.hurt -= dt;
+      if (h.down > 0) { h.down -= dt; if (h.down <= 0) { h.hp = 100; h.x = cx + rand(-20, 20); h.y = cy + rand(-20, 20); } continue; }
+      let nz = null, nd = 1e9;
+      for (const z of g.zoms) { const d = (z.x - h.x) * (z.x - h.x) + (z.y - h.y) * (z.y - h.y); if (d < nd) { nd = d; nz = z; } }
+      let tx, ty;
+      if (pActive) { tx = g.pointer.x - h.x; ty = g.pointer.y - h.y; }
+      else if (nz) { const dx = h.x - nz.x, dy = h.y - nz.y, dl = Math.hypot(dx, dy) || 1; tx = dx / dl + (-dy / dl) * 0.7 + (cx - h.x) / W * 1.4; ty = dy / dl + (dx / dl) * 0.7 + (cy - h.y) / H * 1.4; }
+      else { tx = cx - h.x; ty = cy - h.y; }
+      const tl = Math.hypot(tx, ty) || 1, spd = 74;
+      const dvx = tx / tl * spd, dvy = ty / tl * spd, k = Math.min(1, dt * 6);
+      h.vx += (dvx - h.vx) * k; h.vy += (dvy - h.vy) * k;
+      h.x += h.vx * dt; h.y += h.vy * dt;
+      h.x = Math.max(10, Math.min(W - 10, h.x)); h.y = Math.max(10, Math.min(H - 10, h.y));
+      h.cool -= dt;
+      if (h.cool <= 0 && nz && nd < 150 * 150) { h.cool = 0.22; const dx = nz.x - h.x, dy = nz.y - h.y, dl = Math.hypot(dx, dy) || 1; g.bullets.push({ x: h.x, y: h.y, vx: dx / dl * 240, vy: dy / dl * 240, life: 0.8, col: h.col }); }
+      if (h.hitT > 0) h.hitT -= dt;
+      if (h.hp < 100) h.hp = Math.min(100, h.hp + dt * 7);
+    }
+    for (let i = g.bullets.length - 1; i >= 0; i--) {
+      const b = g.bullets[i]; b.x += b.vx * dt; b.y += b.vy * dt; b.life -= dt; let hit = false;
+      for (let j = g.zoms.length - 1; j >= 0; j--) {
+        const z = g.zoms[j];
+        if ((z.x - b.x) * (z.x - b.x) + (z.y - b.y) * (z.y - b.y) < (z.r + 2) * (z.r + 2)) {
+          z.hp -= 1; z.flash = 0.12; hit = true;
+          const bl = Math.hypot(b.vx, b.vy) || 1; z.x += b.vx / bl * 4; z.y += b.vy / bl * 4;
+          this._spark(g, b.x, b.y, 3, '#A9ECF5', 0.25);
+          if (z.hp <= 0) { this._spark(g, z.x, z.y, 8, z.col, 0.5); g.zoms.splice(j, 1); g.kills++; }
+          break;
+        }
+      }
+      if (hit || b.life <= 0 || b.x < -10 || b.x > W + 10 || b.y < -10 || b.y > H + 10) g.bullets.splice(i, 1);
+    }
+    for (const z of g.zoms) {
+      if (z.flash > 0) z.flash -= dt;
+      let nh = null, nd = 1e9; for (const h of g.heroes) { if (h.down > 0) continue; const d = (h.x - z.x) * (h.x - z.x) + (h.y - z.y) * (h.y - z.y); if (d < nd) { nd = d; nh = h; } }
+      if (nh) {
+        const dx = nh.x - z.x, dy = nh.y - z.y, dl = Math.hypot(dx, dy) || 1;
+        z.x += dx / dl * z.speed * dt; z.y += dy / dl * z.speed * dt; z.ang = Math.atan2(dy, dx);
+        if (nd < (z.r + 9) * (z.r + 9)) {
+          nh.hp -= z.dmg * dt; nh.hurt = 0.18;
+          nh.x += dx / dl * 20 * dt; nh.y += dy / dl * 20 * dt;
+          if (nh.hitT <= 0) { nh.hitT = 0.16; this._spark(g, nh.x, nh.y, 3, '#FF6076', 0.3); }
+          if (nh.hp <= 0 && nh.down <= 0) { nh.down = 3; this._spark(g, nh.x, nh.y, 10, '#FF6076', 0.5); }
+        }
+      }
+    }
+    for (let i = g.parts.length - 1; i >= 0; i--) { const p = g.parts[i]; p.x += p.vx * dt; p.y += p.vy * dt; p.vx *= 0.92; p.vy *= 0.92; p.life -= dt; if (p.life <= 0) g.parts.splice(i, 1); }
+  }
+
+  _gameDraw(g) {
+    const ctx = g.ctx, W = g.w, H = g.h; if (!W) return;
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = '#08090D'; ctx.fillRect(0, 0, W, H);
+    ctx.strokeStyle = 'rgba(88,207,230,0.06)'; ctx.lineWidth = 1; ctx.beginPath();
+    for (let x = 0; x <= W; x += 24) { ctx.moveTo(x, 0); ctx.lineTo(x, H); }
+    for (let y = 0; y <= H; y += 24) { ctx.moveTo(0, y); ctx.lineTo(W, y); }
+    ctx.stroke();
+    for (const p of g.parts) { ctx.globalAlpha = Math.max(0, Math.min(1, p.life * 3)); ctx.fillStyle = p.col; ctx.fillRect(p.x - 1.5, p.y - 1.5, 3, 3); }
+    ctx.globalAlpha = 1;
+    for (const b of g.bullets) { ctx.fillStyle = b.col; ctx.fillRect(b.x - 1.5, b.y - 1.5, 3, 3); }
+    for (const z of g.zoms) {
+      ctx.save(); ctx.translate(z.x, z.y); ctx.rotate(z.ang);
+      ctx.fillStyle = z.col; ctx.fillRect(-z.r, -z.r, z.r * 2, z.r * 2);
+      if (z.flash > 0) { ctx.globalAlpha = Math.min(1, z.flash / 0.12); ctx.fillStyle = '#FFFFFF'; ctx.fillRect(-z.r, -z.r, z.r * 2, z.r * 2); ctx.globalAlpha = 1; }
+      ctx.restore();
+    }
+    for (const h of g.heroes) {
+      ctx.globalAlpha = h.down > 0 ? 0.3 : 1;
+      const hurt = h.hurt > 0;
+      ctx.save(); ctx.shadowColor = hurt ? '#FF5A6E' : h.col; ctx.shadowBlur = hurt ? 18 : 12;
+      ctx.fillStyle = hurt ? '#FF8A98' : h.col; this._rr(ctx, h.x - 7, h.y - 7, 14, 14, 4); ctx.fill(); ctx.restore();
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = 'rgba(255,255,255,0.16)'; ctx.fillRect(h.x - 9, h.y - 14, 18, 3);
+      ctx.fillStyle = h.hp > 35 ? h.col : '#FF5A6E'; ctx.fillRect(h.x - 9, h.y - 14, 18 * Math.max(0, h.hp) / 100, 3);
+    }
+    ctx.fillStyle = 'rgba(234,236,239,0.92)'; ctx.font = '600 11px "IBM Plex Mono", monospace'; ctx.textBaseline = 'top';
+    ctx.textAlign = 'left'; ctx.fillText('WAVE ' + g.wave, 10, 9);
+    ctx.textAlign = 'right'; ctx.fillStyle = '#58CFE6'; ctx.fillText('KILLS ' + g.kills, W - 10, 9);
+    ctx.textAlign = 'left';
+  }
+
+  bennuRef = (el) => { if (el) this._startBennu(el); else this._stopBennu(); };
+
+  _stopBennu() { if (this._b) { cancelAnimationFrame(this._b.raf); this._b = null; } }
+
+  _startBennu(canvas) {
+    this._stopBennu();
+    if (typeof window === 'undefined') return;
+    const ctx = canvas.getContext('2d');
+    const b = {
+      canvas, ctx, raf: 0, last: performance.now(),
+      w: 0, h: 0, dpr: Math.min(2, window.devicePixelRatio || 1),
+      ev: [], spawnAcc: 0,
+      committed: 4213901, eps: 12480, epsT: 0, epsDisp: 12480, p99: 3.2,
+      batchT: 0, flash: 0, rings: [],
+    };
+    this._b = b;
+    const loop = (now) => {
+      const bb = this._b; if (!bb) return;
+      let dt = (now - bb.last) / 1000; if (dt > 0.05) dt = 0.05; if (dt < 0) dt = 0; bb.last = now;
+      this._bennuStep(bb, dt);
+      this._bennuDraw(bb);
+      bb.raf = requestAnimationFrame(loop);
+    };
+    b.raf = requestAnimationFrame(loop);
+  }
+
+  _bennuStep(b, dt) {
+    const cw = b.canvas.clientWidth || 480, ch = b.canvas.clientHeight || 200;
+    if (cw !== b.w || ch !== b.h) {
+      b.w = cw; b.h = ch;
+      b.canvas.width = Math.round(cw * b.dpr); b.canvas.height = Math.round(ch * b.dpr);
+      b.ctx.setTransform(b.dpr, 0, 0, b.dpr, 0, 0);
+    }
+    const W = b.w, H = b.h, gate = W * 0.5;
+    b.spawnAcc += dt * 540;
+    let n = Math.floor(b.spawnAcc); b.spawnAcc -= n;
+    if (b.ev.length > 640) n = 0;
+    for (let i = 0; i < n; i++) {
+      const lane = Math.random(); let y, col;
+      if (lane < 0.45) { y = H * (0.12 + Math.random() * 0.20); col = '#58CFE6'; }
+      else if (lane < 0.75) { y = H * (0.40 + Math.random() * 0.20); col = '#9B8CFF'; }
+      else { y = H * (0.68 + Math.random() * 0.20); col = '#E2A857'; }
+      b.ev.push({ x: -4, y, vx: 120 + Math.random() * 95, col, done: false });
+    }
+    for (let i = b.ev.length - 1; i >= 0; i--) {
+      const e = b.ev[i]; e.x += e.vx * dt;
+      if (!e.done && e.x >= gate) { e.done = true; b.committed += 1; }
+      if (e.x > W + 6) b.ev.splice(i, 1);
+    }
+    b.batchT -= dt;
+    if (b.batchT <= 0) { b.batchT = 0.42; b.flash = 1; b.rings.push({ r: 6, a: 1 }); }
+    if (b.flash > 0) b.flash -= dt * 3.2;
+    for (let i = b.rings.length - 1; i >= 0; i--) { const r = b.rings[i]; r.r += dt * 95; r.a -= dt * 1.6; if (r.a <= 0) b.rings.splice(i, 1); }
+    b.epsT -= dt;
+    if (b.epsT <= 0) { b.epsT = 0.5; b.eps = 11200 + Math.floor(Math.random() * 3600); b.p99 = 2.6 + Math.random() * 1.6; }
+    b.epsDisp += (b.eps - b.epsDisp) * Math.min(1, dt * 4);
+  }
+
+  _bennuDraw(b) {
+    const ctx = b.ctx, W = b.w, H = b.h; if (!W) return;
+    const gate = W * 0.5;
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = '#08090D'; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = 'rgba(226,168,87,' + (0.05 + Math.max(0, b.flash) * 0.10) + ')';
+    ctx.fillRect(gate - 2, 0, 4, H);
+    for (const r of b.rings) { ctx.globalAlpha = Math.max(0, r.a) * 0.5; ctx.strokeStyle = '#E2A857'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(gate, H * 0.5, r.r, 0, 6.283); ctx.stroke(); }
+    ctx.globalAlpha = 1;
+    for (const e of b.ev) { ctx.globalAlpha = e.done ? 0.5 : 0.95; ctx.fillStyle = e.col; const s = e.done ? 1.6 : 2.2; ctx.fillRect(e.x - s, e.y - s, s * 2, s * 2); }
+    ctx.globalAlpha = 1;
+    if (b.flash > 0) { ctx.globalAlpha = Math.min(0.5, b.flash * 0.5); ctx.fillStyle = '#E2A857'; ctx.fillRect(gate - 1, 0, 2, H); ctx.globalAlpha = 1; }
+    ctx.font = '600 11px "IBM Plex Mono", monospace'; ctx.textBaseline = 'top';
+    ctx.fillStyle = 'rgba(234,236,239,0.92)'; ctx.textAlign = 'left'; ctx.fillText('EVENTS/S ' + Math.round(b.epsDisp).toLocaleString('en-US'), 10, 9);
+    ctx.textAlign = 'right'; ctx.fillStyle = '#E2A857'; ctx.fillText('COMMITTED ' + b.committed.toLocaleString('en-US'), W - 10, 9);
+    ctx.textAlign = 'left'; ctx.fillStyle = 'rgba(105,112,125,0.95)'; ctx.fillText('ATOMIC · all-or-nothing', 10, H - 18);
+    ctx.textAlign = 'right'; ctx.fillStyle = 'rgba(105,112,125,0.95)'; ctx.fillText('p99 ' + b.p99.toFixed(1) + 'ms', W - 10, H - 18);
+    ctx.textAlign = 'left'; ctx.font = '500 9px "IBM Plex Mono", monospace';
+    ctx.fillStyle = 'rgba(88,207,230,0.55)'; ctx.fillText('offchain', gate + 8, H * 0.15);
+    ctx.fillStyle = 'rgba(155,140,255,0.55)'; ctx.fillText('realtime', gate + 8, H * 0.45);
+    ctx.fillStyle = 'rgba(226,168,87,0.55)'; ctx.fillText('onchain', gate + 8, H * 0.73);
+  }
+
+  renderVals() {
+    const page = this.state.page;
+    const ACTIVE = '#EAECEF', IDLE = '#9AA3B2';
+    const mk = (k, label) => ({ key: k, label, color: page === k ? ACTIVE : IDLE, onClick: () => this.go(k) });
+    const nav = [mk('home', 'Home'), mk('products', 'Products'), mk('about', 'About'), mk('contact', 'Contact')];
+
+    const products = [
+      { key: 'dreamci', name: 'DreamCI', kicker: 'Unity CI/CD', accent: '#9B8CFF', accentBorder: 'rgba(155,140,255,0.4)', iconBg: 'rgba(155,140,255,0.12)', iconRadius: '3px', iconRot: '45deg', delay: '0', tagline: 'Builds, previews, QA and releases for Unity — automated end to end.' },
+      { key: 'mirage', name: 'Mirage', kicker: 'AI-first 2D engine', accent: '#58CFE6', accentBorder: 'rgba(88,207,230,0.4)', iconBg: 'rgba(88,207,230,0.12)', iconRadius: '50%', iconRot: '0deg', delay: '100', tagline: 'The fastest, most portable 2D engine — Web, Desktop and Mobile, AI-first.' },
+      { key: 'bennu', name: 'Bennu', kicker: 'LiveOps + DevOps', accent: '#E2A857', accentBorder: 'rgba(226,168,87,0.4)', iconBg: 'rgba(226,168,87,0.12)', iconRadius: '3px', iconRot: '0deg', delay: '200', tagline: 'Operate live games across web2 and web3 — onchain and offchain.' },
+    ].map(p => ({ ...p, onClick: () => this.go('products') }));
+
+    const heroTab = this.state.heroTab;
+    const heroTabs = products.map(p => ({
+      key: p.key, name: p.name, accent: p.accent, accentBorder: p.accentBorder,
+      active: heroTab === p.key,
+      bg: heroTab === p.key ? p.iconBg : 'transparent',
+      border: heroTab === p.key ? p.accentBorder : 'rgba(255,255,255,0.10)',
+      color: heroTab === p.key ? '#EAECEF' : '#9AA3B2',
+      onClick: () => this.setState({ heroTab: p.key }),
+    }));
+    const heroTitle = heroTab === 'dreamci' ? 'DreamCI · build #2481'
+      : heroTab === 'mirage' ? 'Mirage · platformer.mir'
+      : 'Bennu · liveops';
+
+    const targets = ['WebGL', 'Windows', 'macOS', 'Android', 'iOS', 'Linux'];
+    const stages = [
+      { n: '01', label: 'Clone & LFS', meta: '12s' },
+      { n: '02', label: 'Restore Library cache', meta: 'R2' },
+      { n: '03', label: 'Unity build · act', meta: 'running' },
+      { n: '04', label: 'Upload artifacts', meta: 'queued' },
+      { n: '05', label: 'WebGL preview', meta: 'queued' },
+    ];
+    const marquee = ['Unity', 'GitHub Actions', 'act', 'WebGL', 'Hetzner', 'Cloudflare R2', 'ECS', 'AI-first', '2D multiplayer', 'rollback netcode', 'web2', 'web3 · onchain', 'LiveOps', 'DevOps'];
+    const marqueeDup = marquee.concat(marquee);
+
+    const dreamFeatures = [
+      { t: 'Shareable links', d: 'every build — WebGL, mobile or desktop — gets a link to share and playtest.' },
+      { t: 'Minutes, not hours', d: 'ephemeral cloud runners with Library cache and LFS restored from R2.' },
+      { t: 'No more local builds', d: 'push your repo and we build it — stop tying up your machine.' },
+      { t: 'Release channels', d: 'stable, beta and nightly — with promotion and rollback.' },
+      { t: 'RBAC & security', d: 'org-level RLS, encrypted secrets, scoped keys and audit logs.' },
+    ];
+    const mirageFeatures = [
+      { t: 'ECS architecture', d: 'a data-oriented entity-component-system core that stays fast as your game grows.' },
+      { t: 'Native multiplayer', d: 'deterministic rollback netcode built in — co-op and PvP with no bolt-on plugins.' },
+      { t: 'One-click deploy', d: 'ship to Web, Desktop and Mobile from a single project, in a single click.' },
+      { t: 'AI-first authoring', d: 'generate gameplay, logic and assets from natural-language prompts.' },
+    ];
+    const bennuFeatures = [
+      { t: 'Live events & remote config', d: 'change the game without shipping a build.' },
+      { t: 'Deploys & rollbacks', d: 'promote across environments with one-click rollback.' },
+      { t: 'Onchain + offchain economies', d: 'manage assets and currencies across web2 and web3.' },
+      { t: 'Player analytics', d: 'segmentation, cohorts and live metrics.' },
+      { t: 'Wallets & auth', d: 'web2 logins and web3 wallets, unified.' },
+    ];
+
+    const players = [
+      { n: 'P1', c: '#58CFE6' }, { n: 'P2', c: '#9B8CFF' }, { n: 'P3', c: '#E2A857' },
+    ];
+    const bars = ['40%', '58%', '50%', '72%', '64%', '82%', '70%', '94%', '78%'].map(h => ({ h }));
+
+    return {
+      page, nav, products, targets, stages,
+      heroTabs, heroTitle,
+      isHeroDream: heroTab === 'dreamci', isHeroMirage: heroTab === 'mirage', isHeroBennu: heroTab === 'bennu',
+      marquee: marqueeDup, dreamFeatures, mirageFeatures, bennuFeatures, players, bars,
+      isHome: page === 'home', isProducts: page === 'products', isAbout: page === 'about', isContact: page === 'contact',
+      goHome: () => this.go('home'), goProducts: () => this.go('products'), goAbout: () => this.go('about'), goContact: () => this.go('contact'),
+      sent: this.state.sent, notSent: !this.state.sent,
+      submit: (e) => { e.preventDefault(); this.setState({ sent: true }); },
+    };
+  }
+}
+</script>
+</body>
+</html>

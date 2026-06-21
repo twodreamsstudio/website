@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:#f9faf6}
+  ::selection{background:rgba(233,95,56,0.18);color:#151914}
+  @keyframes tdl-dot{0%,100%{opacity:1}50%{opacity:0.35}}
+  @media (prefers-reduced-motion: reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:0.01ms!important;animation-duration:0.01ms!important;animation-iteration-count:1!important}}
+</style>
+</helmet>
+
+<div style="background:#f9faf6;color:#151914;font-family:'Inter',ui-sans-serif,system-ui,-apple-system,sans-serif;font-weight:500;line-height:1.5;min-height:100vh;-webkit-font-smoothing:antialiased">
+
+  <!-- ============ HEADER ============ -->
+  <header style="position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:60;width:min(1120px,calc(100% - 32px));display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border:1px solid #c7d0c0;border-radius:8px;background:rgba(249,250,246,0.88);box-shadow:0 14px 40px rgba(20,24,20,0.12);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)">
+    <a href="#top" style="display:flex;align-items:center;gap:11px;text-decoration:none">
+      <span style="width:34px;height:34px;border-radius:6px;background:#151914;color:#f9faf6;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;letter-spacing:0.02em">TD</span>
+      <span style="font-weight:700;font-size:15px;color:#151914">Two Dreams Labs</span>
+    </a>
+    <nav style="display:flex;align-items:center;gap:6px">
+      <a href="#products" style="text-decoration:none;color:#626b5f;font-size:14px;font-weight:600;padding:8px 12px;border-radius:6px;transition:color .16s" style-hover="color:#151914">Products</a>
+      <a href="#approach" style="text-decoration:none;color:#626b5f;font-size:14px;font-weight:600;padding:8px 12px;border-radius:6px;transition:color .16s" style-hover="color:#151914">Approach</a>
+      <a href="#contact" style="text-decoration:none;color:#626b5f;font-size:14px;font-weight:600;padding:8px 12px;border-radius:6px;transition:color .16s" style-hover="color:#151914">Contact</a>
+      <a href="#contact" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;margin-left:6px;min-height:38px;padding:8px 14px;border-radius:7px;background:#151914;color:#f9faf6;font-size:14px;font-weight:700;transition:transform .16s,background .16s" style-hover="transform:translateY(-1px);background:#000">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z"/><path d="m7 16.5-4.74-2.85"/><path d="m7 16.5 5-3"/><path d="M7 16.5v5.17"/><path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 8.5l-5 3Z"/><path d="m17 16.5-5-3"/><path d="m17 16.5 4.74-2.85"/><path d="M17 16.5v5.17"/><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z"/><path d="M12 8 7.26 5.15"/><path d="m12 8 4.74-2.85"/><path d="M12 13.5V8"/></svg>
+        Start
+      </a>
+    </nav>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section id="top" style="position:relative;background-image:linear-gradient(180deg,rgba(249,250,246,0.1),#f9faf6 94%),linear-gradient(rgba(20,24,20,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(20,24,20,0.04) 1px,transparent 1px);background-color:#edf2e8;background-size:auto,42px 42px,42px 42px;border-bottom:1px solid #dce2d6;padding:140px 24px 72px">
+    <div style="width:min(1120px,100%);margin:0 auto;display:flex;flex-wrap:wrap;gap:clamp(36px,5vw,64px);align-items:center;min-height:480px">
+      <div style="flex:1 1 360px;min-width:0">
+        <div style="font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#626b5f">Technology product studio</div>
+        <h1 style="font-weight:800;font-size:clamp(58px,5vw,72px);line-height:0.94;letter-spacing:0;color:#151914;margin:18px 0 0;max-width:620px">Two Dreams<br>Labs</h1>
+        <p style="font-size:18px;line-height:1.5;color:#343a32;margin:22px 0 0;max-width:480px">Infrastructure products for studios shipping and operating games — built to cut the backend and infra cost of making them.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:30px">
+          <a href="#products" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;min-height:46px;padding:12px 18px;border-radius:7px;background:#151914;color:#f9faf6;font-weight:700;font-size:15px;transition:transform .16s,background .16s" style-hover="transform:translateY(-1px);background:#000">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z"/><path d="m7 16.5-4.74-2.85"/><path d="m7 16.5 5-3"/><path d="M7 16.5v5.17"/><path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 8.5l-5 3Z"/><path d="m17 16.5-5-3"/><path d="m17 16.5 4.74-2.85"/><path d="M17 16.5v5.17"/><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z"/><path d="M12 8 7.26 5.15"/><path d="m12 8 4.74-2.85"/><path d="M12 13.5V8"/></svg>
+            Explore products
+          </a>
+          <a href="#contact" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;min-height:46px;padding:12px 18px;border-radius:7px;border:1px solid #c7d0c0;background:rgba(255,255,255,0.62);color:#151914;font-weight:700;font-size:15px;transition:transform .16s,border-color .16s" style-hover="transform:translateY(-1px);border-color:#151914">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            Contact
+          </a>
+        </div>
+      </div>
+
+      <div style="flex:1 1 470px;min-width:0;display:flex;flex-direction:column;gap:12px">
+        <sc-if value="{{ showStatusSignals }}" hint-placeholder-val="{{ true }}">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <sc-for list="{{ signals }}" as="s" hint-placeholder-count="4">
+            <div style="display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;padding:12px 14px;border:1px solid rgba(20,24,20,0.12);border-radius:8px;background:rgba(255,255,255,0.54);box-shadow:0 18px 50px rgba(23,26,22,0.08);backdrop-filter:blur(18px)">
+              <span style="width:30px;height:30px;border-radius:6px;background:{{ s.bg }};color:{{ s.color }};display:flex;align-items:center;justify-content:center" dangerouslySetInnerHTML="{{ s.icon }}"></span>
+              <div style="min-width:0">
+                <div style="font-size:13px;font-weight:700;color:#151914;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ s.label }}</div>
+                <div style="font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;font-size:11px;color:#626b5f">{{ s.meta }}</div>
+              </div>
+              <span style="width:8px;height:8px;border-radius:50%;background:{{ s.color }};animation:tdl-dot 1.8s infinite"></span>
+            </div>
+          </sc-for>
+        </div>
+        </sc-if>
+
+        <div style="border-radius:8px;background:rgba(16,18,16,0.92);color:#f9faf6;box-shadow:0 30px 90px rgba(13,17,13,0.32);overflow:hidden">
+          <div style="display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,0.08)">
+            <span style="width:10px;height:10px;border-radius:50%;background:#e95f38"></span>
+            <span style="width:10px;height:10px;border-radius:50%;background:#d69b19"></span>
+            <span style="width:10px;height:10px;border-radius:50%;background:#5d8f2b"></span>
+            <span style="font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;font-size:12px;color:rgba(249,250,246,0.6);margin-left:6px">operations</span>
+          </div>
+          <div style="padding:14px;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ lanes }}" as="l" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 13px;border:1px solid rgba(255,255,255,0.10);border-left:3px solid {{ l.accent }};border-radius:8px;background:rgba(255,255,255,0.04)">
+                <span style="font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;font-size:12px;color:rgba(249,250,246,0.86)">{{ l.name }}</span>
+                <span style="font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;font-size:11px;color:{{ l.accent }};display:inline-flex;align-items:center;gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:{{ l.accent }};animation:tdl-dot 1.8s infinite"></span>{{ l.status }}</span>
+              </div>
+            </sc-for>
+            <sc-if value="{{ opsTerminalLine }}" hint-placeholder-val="{{ true }}">
+            <div style="margin-top:4px;display:flex;align-items:center;gap:9px;padding:11px 13px;border-radius:8px;background:rgba(0,0,0,0.35);font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;font-size:12px;color:rgba(249,250,246,0.7)">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#5d8f2b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+              <span>dreamci ship --target webgl,win,mac</span>
+            </div>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRODUCTS ============ -->
+  <section id="products" style="width:min(1120px,calc(100% - 48px));margin:0 auto;padding:88px 0 24px">
+    <div style="font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#626b5f">Products</div>
+    <h2 style="font-weight:800;font-size:42px;line-height:1.05;color:#151914;margin:12px 0 0;max-width:640px">Three products. One job: take cost out of shipping games.</h2>
+    <p style="font-size:17px;line-height:1.5;color:#343a32;margin:14px 0 0;max-width:600px">We bled cash on backend and infra building our own games. Each product replaces a line item a studio shouldn't have to pay for.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin-top:40px">
+      <sc-for list="{{ products }}" as="p" hint-placeholder-count="3">
+        <div style="display:flex;flex-direction:column;padding:24px;border:1px solid #dce2d6;border-radius:8px;background:#ffffff;transition:border-color .16s,transform .16s" style-hover="border-color:{{ p.accent }};transform:translateY(-2px)">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="width:34px;height:34px;border-radius:7px;background:{{ p.bg }};color:{{ p.accent }};display:flex;align-items:center;justify-content:center" dangerouslySetInnerHTML="{{ p.icon }}"></span>
+            <span style="font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:{{ p.accent }}">{{ p.label }}</span>
+          </div>
+          <h3 style="font-weight:800;font-size:32px;line-height:1;color:#151914;margin:18px 0 0">{{ p.name }}</h3>
+          <p style="font-size:15px;line-height:1.55;color:#343a32;margin:12px 0 0">{{ p.summary }}</p>
+
+          <div style="margin-top:18px;padding:13px 14px;border:1px solid #dce2d6;border-radius:8px;background:#f9faf6">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <span style="font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;font-size:11px;color:#626b5f">{{ p.statLabel }}</span>
+              <span style="font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;font-size:11px;font-weight:600;color:{{ p.accent }}">{{ p.statValue }}</span>
+            </div>
+            <div style="margin-top:9px;height:6px;border-radius:4px;background:#dce2d6;overflow:hidden">
+              <span style="display:block;height:100%;width:{{ p.statBar }};background:{{ p.accent }};border-radius:4px"></span>
+            </div>
+          </div>
+
+          <div style="margin-top:18px;display:flex;flex-direction:column;gap:9px">
+            <sc-for list="{{ p.bullets }}" as="b" hint-placeholder-count="3">
+              <div style="display:flex;gap:9px;align-items:flex-start">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{ p.accent }}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:1px;flex:none"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>
+                <span style="font-size:14px;line-height:1.45;color:#343a32">{{ b }}</span>
+              </div>
+            </sc-for>
+          </div>
+
+          <a href="#contact" style="margin-top:20px;display:inline-flex;align-items:center;gap:7px;text-decoration:none;font-size:14px;font-weight:700;color:{{ p.accent }};transition:gap .16s" style-hover="gap:11px">
+            {{ p.cta }}
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- ============ APPROACH ============ -->
+  <section id="approach" style="border-top:1px solid #dce2d6;margin-top:64px">
+    <div style="width:min(1120px,calc(100% - 48px));margin:0 auto;padding:80px 0">
+      <div style="display:flex;flex-wrap:wrap;gap:clamp(36px,5vw,72px)">
+        <div style="flex:1 1 360px;min-width:0">
+          <div style="font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#626b5f">Approach</div>
+          <h2 style="font-weight:800;font-size:42px;line-height:1.05;color:#151914;margin:12px 0 0;max-width:520px">We build the infrastructure we couldn't afford to keep paying for.</h2>
+          <p style="font-size:17px;line-height:1.6;color:#343a32;margin:18px 0 0;max-width:520px">Two Dreams Labs is an independent product studio, founded by twin brothers. Shipping our own games, we kept paying for backend engineers, build infrastructure and LiveOps stacks — the same costs, every project.</p>
+          <p style="font-size:17px;line-height:1.6;color:#343a32;margin:14px 0 0;max-width:520px">DreamCI, Mirage and Bennu are how we cut those costs to the bone. Real problems from real game-making, turned into infrastructure any studio can run.</p>
+        </div>
+        <div style="flex:1 1 320px;min-width:0;display:grid;grid-template-columns:1fr;gap:14px;align-content:start">
+          <sc-for list="{{ principles }}" as="pr" hint-placeholder-count="3">
+            <div style="display:flex;gap:14px;align-items:flex-start;padding:18px;border:1px solid #dce2d6;border-radius:8px;background:#ffffff">
+              <span style="width:36px;height:36px;border-radius:7px;background:#edf2e8;color:#151914;display:flex;align-items:center;justify-content:center;flex:none" dangerouslySetInnerHTML="{{ pr.icon }}"></span>
+              <div>
+                <div style="font-weight:700;font-size:16px;color:#151914">{{ pr.title }}</div>
+                <p style="font-size:14px;line-height:1.5;color:#626b5f;margin:5px 0 0">{{ pr.body }}</p>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" style="border-top:1px solid #dce2d6;background:#edf2e8">
+    <div style="width:min(1120px,calc(100% - 48px));margin:0 auto;padding:80px 0">
+      <div style="display:flex;flex-wrap:wrap;gap:clamp(36px,5vw,64px)">
+        <div style="flex:1 1 340px;min-width:0">
+          <div style="font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#626b5f">Contact</div>
+          <h2 style="font-weight:800;font-size:42px;line-height:1.05;color:#151914;margin:12px 0 0;max-width:440px">See what you'd stop paying for.</h2>
+          <p style="font-size:17px;line-height:1.55;color:#343a32;margin:16px 0 0;max-width:440px">Tell us about your studio and stack. We'll set you up with early access and a read on what these tools take off your bill.</p>
+          <div style="margin-top:28px;display:flex;flex-direction:column;gap:16px">
+            <div><div style="font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;font-size:11px;letter-spacing:0.1em;color:#626b5f">EMAIL</div><div style="font-size:16px;color:#151914;margin-top:3px;font-weight:600">hello@twodreamslabs.com</div></div>
+            <div><div style="font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;font-size:11px;letter-spacing:0.1em;color:#626b5f">PRODUCTS</div><div style="font-size:16px;color:#151914;margin-top:3px;font-weight:600">DreamCI · Mirage · Bennu</div></div>
+          </div>
+        </div>
+        <div style="flex:1 1 380px;min-width:0">
+          <div style="border:1px solid #dce2d6;border-radius:8px;background:#ffffff;padding:26px">
+            <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:11px;padding:18px 0">
+                <span style="width:42px;height:42px;border-radius:8px;background:rgba(93,143,43,0.12);color:#5d8f2b;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></span>
+                <div style="font-weight:800;font-size:20px;color:#151914">Thanks — we'll be in touch.</div>
+                <p style="font-size:15px;color:#626b5f;margin:0;line-height:1.5">Your message is on its way to the studio. Expect a reply within a couple of days.</p>
+              </div>
+            </sc-if>
+            <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+              <form onSubmit="{{ submit }}" style="display:flex;flex-direction:column;gap:15px">
+                <div><label style="font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;font-size:11px;letter-spacing:0.08em;color:#626b5f">NAME</label><input required="true" style="width:100%;margin-top:6px;background:#f9faf6;border:1px solid #c7d0c0;border-radius:7px;padding:11px 13px;color:#151914;font-family:'Inter',sans-serif;font-size:15px;font-weight:500;outline:none" style-focus="border-color:#151914"></div>
+                <div><label style="font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;font-size:11px;letter-spacing:0.08em;color:#626b5f">EMAIL</label><input required="true" type="email" style="width:100%;margin-top:6px;background:#f9faf6;border:1px solid #c7d0c0;border-radius:7px;padding:11px 13px;color:#151914;font-family:'Inter',sans-serif;font-size:15px;font-weight:500;outline:none" style-focus="border-color:#151914"></div>
+                <div><label style="font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;font-size:11px;letter-spacing:0.08em;color:#626b5f">STUDIO</label><input style="width:100%;margin-top:6px;background:#f9faf6;border:1px solid #c7d0c0;border-radius:7px;padding:11px 13px;color:#151914;font-family:'Inter',sans-serif;font-size:15px;font-weight:500;outline:none" style-focus="border-color:#151914"></div>
+                <div><label style="font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;font-size:11px;letter-spacing:0.08em;color:#626b5f">WHAT ARE YOU BUILDING?</label><textarea rows="3" style="width:100%;margin-top:6px;background:#f9faf6;border:1px solid #c7d0c0;border-radius:7px;padding:11px 13px;color:#151914;font-family:'Inter',sans-serif;font-size:15px;font-weight:500;outline:none;resize:vertical" style-focus="border-color:#151914"></textarea></div>
+                <button type="submit" style="display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:46px;background:#151914;color:#f9faf6;font-family:'Inter',sans-serif;font-weight:700;font-size:15px;padding:12px;border:none;border-radius:7px;cursor:pointer;transition:transform .16s,background .16s" style-hover="transform:translateY(-1px);background:#000">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+                  Request early access
+                </button>
+              </form>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="border-top:1px solid #dce2d6;background:#f9faf6">
+    <div style="width:min(1120px,calc(100% - 48px));margin:0 auto;padding:44px 0;display:flex;flex-wrap:wrap;justify-content:space-between;gap:28px">
+      <div style="max-width:320px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="width:30px;height:30px;border-radius:6px;background:#151914;color:#f9faf6;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px">TD</span>
+          <span style="font-weight:700;font-size:15px;color:#151914">Two Dreams Labs</span>
+        </div>
+        <p style="font-size:14px;line-height:1.55;color:#626b5f;margin:13px 0 0">A technology product studio building infrastructure for game studios.</p>
+      </div>
+      <div style="display:flex;gap:56px;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <div style="font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#626b5f">Products</div>
+          <a href="#products" style="text-decoration:none;font-size:14px;font-weight:500;color:#343a32" style-hover="color:#151914">DreamCI</a>
+          <a href="#products" style="text-decoration:none;font-size:14px;font-weight:500;color:#343a32" style-hover="color:#151914">Mirage</a>
+          <a href="#products" style="text-decoration:none;font-size:14px;font-weight:500;color:#343a32" style-hover="color:#151914">Bennu</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <div style="font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#626b5f">Studio</div>
+          <a href="#approach" style="text-decoration:none;font-size:14px;font-weight:500;color:#343a32" style-hover="color:#151914">Approach</a>
+          <a href="#contact" style="text-decoration:none;font-size:14px;font-weight:500;color:#343a32" style-hover="color:#151914">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid #dce2d6">
+      <div style="width:min(1120px,calc(100% - 48px));margin:0 auto;padding:20px 0;font-family:ui-monospace,'SFMono-Regular',Menlo,monospace;font-size:12px;color:#626b5f">DreamCI, Mirage and Bennu are products of Two Dreams Labs LLC. © 2026.</div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showStatusSignals&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;opsTerminalLine&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { sent: false };
+
+  renderVals() {
+    const ic = (p) => ({ __html: '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + p + '</svg>' });
+    const icSm = (p) => ({ __html: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + p + '</svg>' });
+
+    const I = {
+      workflow: '<rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/><path d="M7 11v2a2 2 0 0 0 2 2h4"/>',
+      gamepad: '<line x1="6" y1="11" x2="10" y2="11"/><line x1="8" y1="9" x2="8" y2="13"/><circle cx="15" cy="13" r="0.8" fill="currentColor" stroke="none"/><circle cx="18" cy="10.5" r="0.8" fill="currentColor" stroke="none"/><rect x="2" y="6" width="20" height="11" rx="5.5"/>',
+      server: '<rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/>',
+      gitBranch: '<line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/>',
+      rocket: '<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91 0z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>',
+      cloud: '<path d="M17.5 19a4.5 4.5 0 0 0 0-9h-1.8A7 7 0 1 0 4 16.7"/>',
+      gauge: '<path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/>',
+      code: '<path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/>',
+      shield: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
+      layers: '<path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m6.08 9.5-3.49 1.59a1 1 0 0 0 0 1.83l8.59 3.9a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83L17.92 9.5"/>',
+    };
+
+    const signals = [
+      { label: 'Build', meta: 'ready', accent: '#5d8f2b', bg: 'rgba(93,143,43,0.1)', color: '#5d8f2b', icon: ic(I.gitBranch) },
+      { label: 'Release', meta: 'staged', accent: '#d69b19', bg: 'rgba(214,155,25,0.12)', color: '#d69b19', icon: ic(I.rocket) },
+      { label: 'Backend', meta: 'online', accent: '#017c75', bg: 'rgba(1,124,117,0.1)', color: '#017c75', icon: ic(I.cloud) },
+      { label: 'LiveOps', meta: 'armed', accent: '#e95f38', bg: 'rgba(233,95,56,0.1)', color: '#e95f38', icon: ic(I.gauge) },
+    ];
+
+    const lanes = [
+      { name: 'dreamci · build', status: 'passing', accent: '#e95f38' },
+      { name: 'mirage · netcode', status: 'synced', accent: '#5d8f2b' },
+      { name: 'bennu · backend', status: 'online', accent: '#017c75' },
+    ];
+
+    const products = [
+      {
+        key: 'dreamci', label: 'Game CI/CD', name: 'DreamCI', accent: '#e95f38', bg: 'rgba(233,95,56,0.1)', icon: ic(I.workflow),
+        summary: 'Build, test, package and ship Unity games with pipelines designed for game development — no build engineer on payroll.',
+        statLabel: 'build infra cost', statValue: 'pay-per-build', statBar: '32%',
+        bullets: ['Ephemeral cloud runners — pay only for what builds', 'Matrix builds across every platform', 'WebGL previews, QA gates and release channels'],
+        cta: 'Explore DreamCI',
+      },
+      {
+        key: 'mirage', label: '2D engine', name: 'Mirage', accent: '#5d8f2b', bg: 'rgba(93,143,43,0.1)', icon: ic(I.gamepad),
+        summary: 'An ECS-core 2D engine with native multiplayer and one-click deploy to web and desktop — ship multiplayer without a backend team.',
+        statLabel: 'multiplayer backend', statValue: 'built-in', statBar: '22%',
+        bullets: ['Deterministic rollback netcode, no plugins', 'One project → web and desktop in a click', 'Data-oriented ECS core that scales'],
+        cta: 'Explore Mirage',
+      },
+      {
+        key: 'bennu', label: 'Game backend', name: 'Bennu', accent: '#017c75', bg: 'rgba(1,124,117,0.1)', icon: ic(I.server),
+        summary: 'A managed game backend and LiveOps platform for web2 and web3 — production-ready services without rebuilding the same stack every project.',
+        statLabel: 'stack rebuilt per project', statValue: 'never', statBar: '18%',
+        bullets: ['Live events, remote config and deploys', 'Player economies across onchain and offchain', 'Analytics, wallets and auth, unified'],
+        cta: 'Explore Bennu',
+      },
+    ];
+
+    const principles = [
+      { title: 'Developer-first', body: 'Open standards where it counts — Actions-compatible workflows, portable projects, your data.', icon: icSm(I.code) },
+      { title: 'Production defaults', body: 'Multi-tenant with row-level security, encrypted secrets, scoped keys and full audit logs.', icon: icSm(I.shield) },
+      { title: 'Product-brand focus', body: 'Two Dreams Labs is the house. DreamCI, Mirage and Bennu stand on their own.', icon: icSm(I.layers) },
+    ];
+
+    return {
+      signals, lanes, products, principles,
+      showStatusSignals: this.props.showStatusSignals ?? true,
+      opsTerminalLine: this.props.opsTerminalLine ?? true,
+      sent: this.state.sent, notSent: !this.state.sent,
+      submit: (e) => { e.preventDefault(); this.setState({ sent: true }); },
+    };
+  }
+}
+</script>
+</body>
+</html>
